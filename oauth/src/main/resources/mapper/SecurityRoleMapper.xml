@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.oauth.mapper.SecurityRoleMapper">
+  <resultMap id="BaseResultMap" type="com.study.oauth.model.SecurityRole">
+    <id column="r_id" jdbcType="BIGINT" property="rId" />
+    <result column="r_name" jdbcType="VARCHAR" property="rName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    r_id, r_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from security_role
+    where r_id = #{rId,jdbcType=BIGINT}
+  </select>
+    <select id="selectListByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select * from
+
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from security_role
+    where r_id = #{rId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.study.oauth.model.SecurityRole">
+    insert into security_role (r_id, r_name)
+    values (#{rId,jdbcType=BIGINT}, #{rName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.study.oauth.model.SecurityRole">
+    insert into security_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        r_id,
+      </if>
+      <if test="rName != null">
+        r_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        #{rId,jdbcType=BIGINT},
+      </if>
+      <if test="rName != null">
+        #{rName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.study.oauth.model.SecurityRole">
+    update security_role
+    <set>
+      <if test="rName != null">
+        r_name = #{rName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where r_id = #{rId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.study.oauth.model.SecurityRole">
+    update security_role
+    set r_name = #{rName,jdbcType=VARCHAR}
+    where r_id = #{rId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.oauth.mapper.SecurityUserMapper">
+  <resultMap id="BaseResultMap" type="com.study.oauth.model.SecurityUser">
+    <id column="u_id" jdbcType="BIGINT" property="uId" />
+    <result column="u_username" jdbcType="VARCHAR" property="uUsername" />
+    <result column="u_password" jdbcType="VARCHAR" property="uPassword" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    u_id, u_username, u_password
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from security_user
+    where u_id = #{uId,jdbcType=BIGINT}
+  </select>
+    <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from security_user
+      where u_username = #{uUsername,jdbcType=VARCHAR}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from security_user
+    where u_id = #{uId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.study.oauth.model.SecurityUser">
+    insert into security_user (u_id, u_username, u_password
+      )
+    values (#{uId,jdbcType=BIGINT}, #{uUsername,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.study.oauth.model.SecurityUser">
+    insert into security_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="uUsername != null">
+        u_username,
+      </if>
+      <if test="uPassword != null">
+        u_password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        #{uId,jdbcType=BIGINT},
+      </if>
+      <if test="uUsername != null">
+        #{uUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.study.oauth.model.SecurityUser">
+    update security_user
+    <set>
+      <if test="uUsername != null">
+        u_username = #{uUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        u_password = #{uPassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where u_id = #{uId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.study.oauth.model.SecurityUser">
+    update security_user
+    set u_username = #{uUsername,jdbcType=VARCHAR},
+      u_password = #{uPassword,jdbcType=VARCHAR}
+    where u_id = #{uId,jdbcType=BIGINT}
+  </update>
+</mapper>
